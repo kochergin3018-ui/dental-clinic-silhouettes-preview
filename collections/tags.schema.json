@@ -1,0 +1,53 @@
+{
+  "$ref": "#/definitions/tags",
+  "definitions": {
+    "tags": {
+      "type": "object",
+      "properties": {
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "errorMessage": {
+            "pattern": "slug: только латиница в нижнем регистре, цифры и дефисы"
+          }
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "audience",
+            "method",
+            "format",
+            "condition"
+          ]
+        },
+        "lead": {
+          "type": "string",
+          "minLength": 1
+        },
+        "page": {
+          "type": "boolean",
+          "default": false
+        },
+        "order": {
+          "type": "integer",
+          "default": 100
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "slug",
+        "title",
+        "kind",
+        "lead"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

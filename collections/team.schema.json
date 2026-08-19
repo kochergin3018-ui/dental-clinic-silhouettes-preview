@@ -1,0 +1,148 @@
+{
+  "$ref": "#/definitions/team",
+  "definitions": {
+    "team": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "errorMessage": {
+            "pattern": "slug: только латиница в нижнем регистре, цифры и дефисы"
+          }
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "doctor",
+            "chief",
+            "admin",
+            "assistant"
+          ]
+        },
+        "photo": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "specialties": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "default": []
+        },
+        "experience_since": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1950,
+              "maximum": 2100
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "categories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/team/properties/slug"
+          },
+          "default": []
+        },
+        "services": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/team/properties/slug"
+          },
+          "default": []
+        },
+        "education": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "year": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null
+              },
+              "place": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "place"
+            ],
+            "additionalProperties": false
+          },
+          "default": []
+        },
+        "courses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "year": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "title"
+            ],
+            "additionalProperties": false
+          },
+          "default": []
+        },
+        "quote": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "order": {
+          "type": "integer",
+          "default": 100
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "slug",
+        "role"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

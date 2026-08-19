@@ -1,0 +1,10 @@
+# Обход открыт целиком. Страницы, которых не должно быть в выдаче (политика, согласие,
+# витрина макетов, 404), закрыты noindex в мете: под Disallow робот не прочитал бы её.
+# Роботы ИИ-поиска и YandexAdditional не блокируются намеренно.
+User-agent: *
+Allow: /
+
+# Метки кампаний не меняют содержимое: Clean-param склеивает такие адреса (Яндекс).
+Clean-param: utm_source&utm_medium&utm_campaign&utm_term&utm_content&yclid&gclid&theme
+
+Sitemap: https://kochergin3018-ui.github.io/sitemap-index.xml

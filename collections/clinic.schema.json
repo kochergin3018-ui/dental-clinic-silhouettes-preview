@@ -1,0 +1,587 @@
+{
+  "$ref": "#/definitions/clinic",
+  "definitions": {
+    "clinic": {
+      "type": "object",
+      "properties": {
+        "brand": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "tagline": {
+              "type": "string",
+              "minLength": 1
+            },
+            "logo": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "default": null
+            }
+          },
+          "required": [
+            "name",
+            "tagline"
+          ],
+          "additionalProperties": false
+        },
+        "contacts": {
+          "type": "object",
+          "properties": {
+            "phones": {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "errorMessage": {
+                      "minLength": "пустая строка: впишите значение или поставьте «впиши: …»"
+                    }
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "minItems": 1,
+              "errorMessage": {
+                "minItems": "нужен хотя бы один телефон (можно «впиши: телефон»)"
+              }
+            },
+            "email": {
+              "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+            },
+            "address": {
+              "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+            },
+            "city": {
+              "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items",
+              "default": null
+            },
+            "region": {
+              "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items",
+              "default": null
+            },
+            "postal_code": {
+              "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items",
+              "default": null
+            },
+            "how_to_get": {
+              "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+            },
+            "hours": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "days": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "time": {
+                    "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+                  }
+                },
+                "required": [
+                  "days",
+                  "time"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            },
+            "messengers": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "url": {
+                    "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+                  }
+                },
+                "required": [
+                  "name",
+                  "url"
+                ],
+                "additionalProperties": false
+              },
+              "default": []
+            },
+            "map_embed_url": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "default": null
+            },
+            "route_url": {
+              "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+            }
+          },
+          "required": [
+            "phones",
+            "email",
+            "address",
+            "how_to_get",
+            "hours",
+            "route_url"
+          ],
+          "additionalProperties": false
+        },
+        "trust": {
+          "type": "object",
+          "properties": {
+            "years": {
+              "anyOf": [
+                {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "patients": {
+              "$ref": "#/definitions/clinic/properties/trust/properties/years"
+            },
+            "rating": {
+              "$ref": "#/definitions/clinic/properties/trust/properties/years"
+            }
+          },
+          "required": [
+            "years",
+            "patients",
+            "rating"
+          ],
+          "additionalProperties": false
+        },
+        "ratings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "platform": {
+                "type": "string",
+                "minLength": 1
+              },
+              "value": {
+                "$ref": "#/definitions/clinic/properties/trust/properties/years"
+              },
+              "count": {
+                "$ref": "#/definitions/clinic/properties/trust/properties/years"
+              },
+              "url": {
+                "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+              }
+            },
+            "required": [
+              "platform",
+              "value",
+              "count",
+              "url"
+            ],
+            "additionalProperties": false
+          },
+          "default": []
+        },
+        "home_hero": {
+          "type": "object",
+          "properties": {
+            "eyebrow": {
+              "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items",
+              "default": null
+            },
+            "callouts": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+                  },
+                  "text": {
+                    "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+                  }
+                },
+                "required": [
+                  "title",
+                  "text"
+                ],
+                "additionalProperties": false
+              },
+              "default": []
+            }
+          },
+          "additionalProperties": false,
+          "default": {}
+        },
+        "legal": {
+          "type": "object",
+          "properties": {
+            "full_name": {
+              "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+            },
+            "short_name": {
+              "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+            },
+            "inn": {
+              "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+            },
+            "kpp": {
+              "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+            },
+            "ogrn": {
+              "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+            },
+            "okpo": {
+              "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+            },
+            "okved": {
+              "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+            },
+            "legal_address": {
+              "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+            },
+            "actual_address": {
+              "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+            },
+            "bank": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+                },
+                "account": {
+                  "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+                },
+                "corr": {
+                  "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+                },
+                "bik": {
+                  "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+                }
+              },
+              "required": [
+                "name",
+                "account",
+                "corr",
+                "bik"
+              ],
+              "additionalProperties": false
+            },
+            "director": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+                },
+                "title": {
+                  "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+                }
+              },
+              "required": [
+                "name",
+                "title"
+              ],
+              "additionalProperties": false
+            },
+            "contacts_for_appeals": {
+              "type": "object",
+              "properties": {
+                "phone": {
+                  "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+                },
+                "email": {
+                  "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+                }
+              },
+              "required": [
+                "phone",
+                "email"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "full_name",
+            "short_name",
+            "inn",
+            "kpp",
+            "ogrn",
+            "legal_address",
+            "actual_address",
+            "bank",
+            "director",
+            "contacts_for_appeals"
+          ],
+          "additionalProperties": false
+        },
+        "license": {
+          "type": "object",
+          "properties": {
+            "number": {
+              "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+            },
+            "issued_by": {
+              "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+            },
+            "issued_at": {
+              "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+            },
+            "valid_until": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "registry_url": {
+              "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items",
+              "default": null
+            },
+            "activities": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "default": []
+            }
+          },
+          "required": [
+            "number",
+            "issued_by",
+            "issued_at",
+            "valid_until"
+          ],
+          "additionalProperties": false
+        },
+        "staff_accreditation": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "specialist": {
+                "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+              },
+              "position": {
+                "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+              },
+              "credential": {
+                "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+              },
+              "valid_until": {
+                "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+              }
+            },
+            "required": [
+              "specialist",
+              "position",
+              "credential",
+              "valid_until"
+            ],
+            "additionalProperties": false
+          },
+          "default": []
+        },
+        "reviews_section": {
+          "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items",
+          "default": null
+        },
+        "disclosure": {
+          "type": "object",
+          "properties": {
+            "free_care": {
+              "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items",
+              "default": null
+            },
+            "paid_care": {
+              "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items",
+              "default": null
+            },
+            "benefits": {
+              "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items",
+              "default": null
+            },
+            "guidelines_url": {
+              "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items",
+              "default": null
+            },
+            "contract_channels": {
+              "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items",
+              "default": null
+            },
+            "estimate": {
+              "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items",
+              "default": null
+            }
+          },
+          "additionalProperties": false,
+          "default": {}
+        },
+        "about": {
+          "type": "object",
+          "properties": {
+            "manifest": {
+              "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items",
+              "default": null
+            },
+            "principles": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+                  },
+                  "text": {
+                    "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+                  }
+                },
+                "required": [
+                  "title",
+                  "text"
+                ],
+                "additionalProperties": false
+              },
+              "default": []
+            }
+          },
+          "additionalProperties": false,
+          "default": {}
+        },
+        "first_visit": {
+          "type": "object",
+          "properties": {
+            "lead": {
+              "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items",
+              "default": null
+            },
+            "steps": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+                  },
+                  "text": {
+                    "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+                  }
+                },
+                "required": [
+                  "title",
+                  "text"
+                ],
+                "additionalProperties": false
+              },
+              "default": []
+            }
+          },
+          "additionalProperties": false,
+          "default": {}
+        },
+        "updated_at": {
+          "anyOf": [
+            {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    {
+                      "type": "string",
+                      "format": "date"
+                    },
+                    {
+                      "type": "integer",
+                      "format": "unix-time"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "supervisors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "address": {
+                "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+              },
+              "phone": {
+                "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+              },
+              "email": {
+                "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+              },
+              "url": {
+                "$ref": "#/definitions/clinic/properties/contacts/properties/phones/items"
+              }
+            },
+            "required": [
+              "name",
+              "address",
+              "phone",
+              "email",
+              "url"
+            ],
+            "additionalProperties": false
+          },
+          "default": []
+        },
+        "price_list_pdf": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "brand",
+        "contacts",
+        "trust",
+        "legal",
+        "license"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

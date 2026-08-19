@@ -1,0 +1,107 @@
+{
+  "$ref": "#/definitions/reviews",
+  "definitions": {
+    "reviews": {
+      "type": "object",
+      "properties": {
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "errorMessage": {
+            "pattern": "slug: только латиница в нижнем регистре, цифры и дефисы"
+          }
+        },
+        "author": {
+          "type": "string",
+          "minLength": 1
+        },
+        "date": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "type": "integer",
+              "format": "unix-time"
+            }
+          ]
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "service": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/reviews/properties/slug"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "doctor": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/reviews/properties/slug"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "source": {
+          "type": "string",
+          "const": "own",
+          "default": "own"
+        },
+        "consent_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "errorMessage": {
+                "minLength": "пустая строка: впишите значение или поставьте «впиши: …»"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "reply": {
+          "type": "string",
+          "minLength": 1
+        },
+        "published": {
+          "type": "boolean",
+          "default": false
+        },
+        "demo": {
+          "type": "boolean",
+          "default": false
+        },
+        "demo_label": {
+          "type": "string",
+          "const": "демо-отзыв, не отзыв пациента"
+        }
+      },
+      "required": [
+        "slug",
+        "author",
+        "date",
+        "text"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

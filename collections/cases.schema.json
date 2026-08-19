@@ -1,0 +1,253 @@
+{
+  "$ref": "#/definitions/cases",
+  "definitions": {
+    "cases": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "slug": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "errorMessage": {
+                "pattern": "slug: только латиница в нижнем регистре, цифры и дефисы"
+              }
+            },
+            "demo": {
+              "type": "boolean",
+              "const": true
+            },
+            "demo_label": {
+              "type": "string",
+              "const": "схема, не фотография"
+            },
+            "published": {
+              "type": "boolean",
+              "const": false,
+              "default": false
+            },
+            "before": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "type": "string",
+                  "const": "до"
+                }
+              },
+              "required": [
+                "label"
+              ],
+              "additionalProperties": false
+            },
+            "after": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "type": "string",
+                  "const": "после"
+                }
+              },
+              "required": [
+                "label"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "slug",
+            "demo",
+            "demo_label",
+            "before",
+            "after"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "slug": {
+              "$ref": "#/definitions/cases/anyOf/0/properties/slug"
+            },
+            "demo": {
+              "type": "boolean",
+              "const": false,
+              "default": false
+            },
+            "service": {
+              "$ref": "#/definitions/cases/anyOf/0/properties/slug"
+            },
+            "services_extra": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/cases/anyOf/0/properties/slug"
+              },
+              "default": []
+            },
+            "doctor": {
+              "$ref": "#/definitions/cases/anyOf/0/properties/slug"
+            },
+            "title": {
+              "type": "string",
+              "minLength": 1
+            },
+            "what_done": {
+              "type": "string",
+              "minLength": 1
+            },
+            "duration": {
+              "type": "string",
+              "minLength": 1
+            },
+            "patient": {
+              "type": "object",
+              "properties": {
+                "age_range": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sex": {
+                  "type": "string",
+                  "enum": [
+                    "f",
+                    "m"
+                  ]
+                }
+              },
+              "additionalProperties": false,
+              "default": {}
+            },
+            "before": {
+              "type": "object",
+              "properties": {
+                "src": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "alt": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "src",
+                "alt"
+              ],
+              "additionalProperties": false
+            },
+            "after": {
+              "$ref": "#/definitions/cases/anyOf/1/properties/before"
+            },
+            "extra": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "src": {
+                    "$ref": "#/definitions/cases/anyOf/1/properties/before/properties/src"
+                  },
+                  "alt": {
+                    "$ref": "#/definitions/cases/anyOf/1/properties/before/properties/alt"
+                  },
+                  "caption": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "src",
+                  "alt"
+                ],
+                "additionalProperties": false
+              },
+              "default": []
+            },
+            "taken_at": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}$",
+              "errorMessage": {
+                "pattern": "taken_at: месяц в формате ГГГГ-ММ"
+              }
+            },
+            "same_conditions": {
+              "type": "boolean",
+              "const": true
+            },
+            "retouched": {
+              "type": "boolean",
+              "const": false
+            },
+            "consent_id": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1,
+                  "errorMessage": {
+                    "minLength": "пустая строка: впишите значение или поставьте «впиши: …»"
+                  }
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null
+            },
+            "consent_until": {
+              "anyOf": [
+                {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        {
+                          "type": "string",
+                          "format": "date"
+                        },
+                        {
+                          "type": "integer",
+                          "format": "unix-time"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "default": null
+            },
+            "published": {
+              "type": "boolean",
+              "default": false
+            },
+            "note": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "slug",
+            "service",
+            "doctor",
+            "title",
+            "what_done",
+            "duration",
+            "before",
+            "after",
+            "same_conditions",
+            "retouched"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

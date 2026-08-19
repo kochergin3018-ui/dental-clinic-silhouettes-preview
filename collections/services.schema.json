@@ -1,0 +1,383 @@
+{
+  "$ref": "#/definitions/services",
+  "definitions": {
+    "services": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "errorMessage": {
+            "pattern": "slug: только латиница в нижнем регистре, цифры и дефисы"
+          }
+        },
+        "category": {
+          "$ref": "#/definitions/services/properties/slug"
+        },
+        "order": {
+          "type": "integer",
+          "default": 100
+        },
+        "lead": {
+          "type": "string",
+          "minLength": 1
+        },
+        "badges": {
+          "type": "object",
+          "properties": {
+            "duration": {
+              "type": "string"
+            },
+            "visits": {
+              "type": "string"
+            },
+            "anesthesia": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "default": {}
+        },
+        "image": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "short_answer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "preparation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "followup": {
+          "type": "string",
+          "minLength": 1
+        },
+        "advantages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "text": {
+                "type": "string",
+                "minLength": 1
+              },
+              "proof": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "title",
+              "text"
+            ],
+            "additionalProperties": false
+          },
+          "default": []
+        },
+        "cases": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/services/properties/slug"
+          },
+          "default": []
+        },
+        "reviews": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/services/properties/slug"
+          },
+          "default": []
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/services/properties/slug"
+          },
+          "maxItems": 5,
+          "errorMessage": {
+            "maxItems": "у услуги не больше пяти тегов"
+          },
+          "default": []
+        },
+        "lsi": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string",
+              "minLength": 1,
+              "default": "Ещё о процедуре"
+            },
+            "blocks": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "heading": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "text": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "heading",
+                  "text"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            }
+          },
+          "required": [
+            "blocks"
+          ],
+          "additionalProperties": false
+        },
+        "indications": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "default": []
+        },
+        "steps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "text": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "title",
+              "text"
+            ],
+            "additionalProperties": false
+          },
+          "default": []
+        },
+        "contraindications": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "errorMessage": {
+            "minItems": "contraindications: нужен хотя бы один пункт или «Уточняется на консультации»"
+          }
+        },
+        "prices": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "minLength": 1
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "from",
+                  "fixed",
+                  "range"
+                ],
+                "default": "from"
+              },
+              "value": {
+                "anyOf": [
+                  {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "value_to": {
+                "type": "number",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "label",
+              "value"
+            ],
+            "additionalProperties": false
+          },
+          "default": []
+        },
+        "procedure_kind": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "surgical",
+                "therapeutic",
+                "diagnostic"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "procedure_type": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "noninvasive",
+                "percutaneous"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "author": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/services/properties/slug"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "reviewed_by": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/services/properties/slug"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "reviewed_at": {
+          "anyOf": [
+            {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+                  "errorMessage": {
+                    "pattern": "reviewed_at: дата в формате ГГГГ-ММ-ДД"
+                  }
+                },
+                {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    {
+                      "type": "string",
+                      "format": "date"
+                    },
+                    {
+                      "type": "integer",
+                      "format": "unix-time"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "doctors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/services/properties/slug"
+          },
+          "default": []
+        },
+        "related": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/services/properties/slug"
+          },
+          "default": []
+        },
+        "faq": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "q": {
+                "type": "string",
+                "minLength": 1
+              },
+              "a": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "q",
+              "a"
+            ],
+            "additionalProperties": false
+          },
+          "default": []
+        },
+        "seo": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "default": {}
+        }
+      },
+      "required": [
+        "title",
+        "slug",
+        "category",
+        "lead",
+        "contraindications"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

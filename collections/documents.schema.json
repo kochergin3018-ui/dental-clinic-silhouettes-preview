@@ -1,0 +1,48 @@
+{
+  "$ref": "#/definitions/documents",
+  "definitions": {
+    "documents": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "license",
+            "registry",
+            "egrul",
+            "rules",
+            "policy",
+            "other"
+          ]
+        },
+        "file": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        },
+        "issued_at": {
+          "type": "string"
+        },
+        "order": {
+          "type": "integer",
+          "default": 100
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "kind"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}
